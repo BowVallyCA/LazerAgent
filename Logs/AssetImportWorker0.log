@@ -218,3 +218,35 @@ Received Import Request.
 Start importing Assets/New Folder using Guid(1238658ea3ae09749842786f9632df8a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd5e02910410af175e409bb4dbb9bd313') in 0.0009091 seconds
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
 
+========================================================================
+Received Import Request.
+  Time since last request: 65.722975 seconds.
+  path: Assets/CanyonsStuff
+  artifactKey: Guid(88fd46ac4abb722498555a9a87cff1d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanyonsStuff using Guid(88fd46ac4abb722498555a9a87cff1d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: 'd5df1ba8094d9c22e1ff905ce39abf4f') in 0.0007442 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 851.388778 seconds.
+  path: Assets/CanyonsStuff/Scripts
+  artifactKey: Guid(d006040177bbb5c4f8020e8944d0e479) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanyonsStuff/Scripts using Guid(d006040177bbb5c4f8020e8944d0e479) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '632f52fa3a5233d7fb46387cc054b5f2') in 0.00077 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.364554 seconds.
+  path: Assets/CanyonsStuff/Scenes
+  artifactKey: Guid(a4f08f1361dc6304e9458ba3e0461357) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanyonsStuff/Scenes using Guid(a4f08f1361dc6304e9458ba3e0461357) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '1597b05e4e9b7160dafc0430dec95dca') in 0.0007177 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 18.378299 seconds.
+  path: Assets/CanyonsStuff/Scenes/CanyonTestingScene.unity
+  artifactKey: Guid(3e41b7dff22edf346830aeba699bfcdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CanyonsStuff/Scenes/CanyonTestingScene.unity using Guid(3e41b7dff22edf346830aeba699bfcdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (artifact id: '54ea26274bf6cfe48abb65b491ef6bc6') in 0.0008263 seconds
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
