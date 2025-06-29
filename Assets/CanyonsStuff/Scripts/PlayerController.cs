@@ -5,6 +5,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _playerSpeed = 5f;
     [SerializeField] public float rayLength = 5f;
     [SerializeField] public LineRenderer lineRenderer;
+    [SerializeField] private int maxReflections = 3;
+    [SerializeField] private LayerMask reflectiveLayer;
+    [SerializeField] private GameObject laserOrgin;
+    [SerializeField] private Transform fireOrgin;
+    [SerializeField] private GameObject bulletPrefab;
 
     private Rigidbody2D rigidBody;
     private Vector2 playerDirection;
@@ -22,13 +27,55 @@ public class PlayerController : MonoBehaviour
         UpdatePlayerDirection();
         UpdateMouseRotation();
 
-        Vector3 direction = transform.up; // Or transform.up depending on character facing
-        Vector3 origin = transform.position;
-        Vector3 endPoint = origin + direction * rayLength;
+        Vector2 origin = laserOrgin.transform.position;
+        Vector2 direction = transform.up;
 
-        // Update LineRenderer points
+        lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, origin);
-        lineRenderer.SetPosition(1, endPoint);
+
+        int reflections = 0;
+        float remainingLength = rayLength;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            FireBullet();
+        }
+
+        while (reflections < maxReflections)
+        {
+            // Raycast against ALL colliders
+            RaycastHit2D hit = Physics2D.Raycast(origin, direction, remainingLength);
+
+            if (hit.collider != null)
+            {
+                Vector2 hitPoint = hit.point;
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, hitPoint);
+
+                // Check if the object hit is on the reflective layer
+                if (((1 << hit.collider.gameObject.layer) & reflectiveLayer) != 0)
+                {
+                    // Reflect direction and continue
+                    direction = Vector2.Reflect(direction, hit.normal);
+                    remainingLength -= Vector2.Distance(origin, hitPoint);
+                    origin = hitPoint + direction * 0.01f; // Small offset to avoid same-hit loop
+                    reflections++;
+                }
+                else
+                {
+                    // Hit non-reflective wall — stop here
+                    break;
+                }
+            }
+            else
+            {
+                // No hit: draw the rest of the laser in current direction
+                Vector2 endPoint = origin + direction * remainingLength;
+                lineRenderer.positionCount++;
+                lineRenderer.SetPosition(lineRenderer.positionCount - 1, endPoint);
+                break;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -58,5 +105,12 @@ public class PlayerController : MonoBehaviour
 
         // Apply rotation around Z axis
         transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
+    }
+
+    void FireBullet()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, fireOrgin.position, fireOrgin.rotation);
+        ReflectingBullet bulletScript = bullet.GetComponent<ReflectingBullet>();
+        bulletScript.Fire(fireOrgin.up); // Fire in the direction the player is facing
     }
 }
