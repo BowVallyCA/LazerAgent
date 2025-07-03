@@ -44,6 +44,8 @@ public class ReflectingBullet : MonoBehaviour
                     moveDirection = Vector2.Reflect(moveDirection, hit.normal);
                     currentReflections++;
                     transform.position = hit.point + moveDirection * 0.01f;
+                    transform.Rotate(new Vector3(0,0,transform.eulerAngles.z*-2));
+
                     return;
                 }
                 else
