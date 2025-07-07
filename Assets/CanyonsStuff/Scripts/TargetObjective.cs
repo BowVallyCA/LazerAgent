@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +10,11 @@ public class TargetObjective : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Renderer rend = gameObject.GetComponent<Renderer>();
+        SpriteRenderer rend = gameObject.GetComponent<SpriteRenderer>();
 
         OnTargetObjectiveCollected.Invoke();
 
         _objectiveLight.color = Color.red;
-        rend.material.color = Color.white;
+        rend.color = Color.white;
     }
 }
