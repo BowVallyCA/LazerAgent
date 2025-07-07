@@ -1,15 +1,22 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _playerSpeed = 5f;
+
     [SerializeField] public float rayLength = 5f;
     [SerializeField] public LineRenderer lineRenderer;
     [SerializeField] private int maxReflections = 3;
     [SerializeField] private LayerMask reflectiveLayer;
     [SerializeField] private GameObject laserOrgin;
+
     [SerializeField] private Transform fireOrgin;
     [SerializeField] private GameObject bulletPrefab;
+
+    [SerializeField] private float ammoCount = 20f;
+    [SerializeField] private TMP_Text ammoText;
+    [SerializeField] private GameObject loseScreen;
 
     private Rigidbody2D rigidBody;
     private Vector2 playerDirection;
@@ -109,8 +116,20 @@ public class PlayerController : MonoBehaviour
 
     void FireBullet()
     {
-        GameObject bullet = Instantiate(bulletPrefab, fireOrgin.position, fireOrgin.rotation);
-        ReflectingBullet bulletScript = bullet.GetComponent<ReflectingBullet>();
-        bulletScript.Fire(fireOrgin.up); // Fire in the direction the player is facing
+        if(ammoCount > 0f)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, fireOrgin.position, fireOrgin.rotation);
+            ReflectingBullet bulletScript = bullet.GetComponent<ReflectingBullet>();
+            bulletScript.Fire(fireOrgin.up); // Fire in the direction the player is facing
+
+            ammoCount -= 1f;
+            ammoText.SetText($"{ammoCount}/20");
+        }
+        else
+        {
+            loseScreen.SetActive(true);
+            Time.timeScale = 0f;
+        }
+
     }
 }
