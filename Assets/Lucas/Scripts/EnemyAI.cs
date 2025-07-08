@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private List<Transform> _movement = new List<Transform>();
     private Rigidbody2D _rigidbody;
     private Vector3 _velocity = Vector3.zero;
+    [SerializeField] private GameObject _droppedItem;
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -31,6 +32,12 @@ public class EnemyAI : MonoBehaviour
             _movement.RemoveAt(0);
             _velocity = (transform.position - _movement[0].position).normalized;
             transform.LookAt(_movement[0].position);
+            return;
+        }
+        if(_droppedItem != null && collision.gameObject.GetComponent<ReflectingBullet>() != null)
+        {
+            GameObject clone = Instantiate(_droppedItem,transform.position,new Quaternion(0,0,0,0));
+            Destroy(gameObject);
         }
     }
 }
