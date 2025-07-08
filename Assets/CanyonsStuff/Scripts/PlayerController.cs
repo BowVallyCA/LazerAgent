@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,14 +21,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TMP_Text ammoText;
     [SerializeField] private GameObject loseScreen;
 
+    private int health = 3;
+    public UnityEvent<int> damaged;
+
     private Rigidbody2D rigidBody;
+    private SpriteRenderer spriteRenderer;
+
     private Vector2 playerDirection;
+   
+
+    private bool invincible = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -112,6 +124,34 @@ public class PlayerController : MonoBehaviour
 
         // Apply rotation around Z axis
         transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
+    }
+
+    IEnumerator Hurt()
+    {
+        if (!invincible)
+        {
+            invincible = true;
+            spriteRenderer.color = new Color(255,255,255,0.5f);
+            health -= 1;
+            damaged.Invoke(health);
+            yield return null;
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+
+            yield return new WaitForSeconds(3f);
+            spriteRenderer.color = Color.white;
+            invincible = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            StartCoroutine(Hurt());
+        }
     }
 
     void FireBullet()
